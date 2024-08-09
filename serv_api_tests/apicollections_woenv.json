@@ -1,0 +1,426 @@
+{
+	"info": {
+		"_postman_id": "e2bf5a1f-9dfd-4320-8012-51dd116a8e07",
+		"name": "CRUD Operation EmployeeManagement Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10189735"
+	},
+	"item": [
+		{
+			"name": "CreateUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"setTimeout(function(){}, 500);\r",
+							"\r",
+							"//Test01\r",
+							"pm.test(\"Create POST response success,200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//Test verification\r",
+							"let jsonData = pm.response.json();\r",
+							"let id = jsonData._id.toString();\r",
+							"let email = jsonData.email.toString();\r",
+							"let name = jsonData.name.toString();\r",
+							"\r",
+							" display(\"Name\", name);\r",
+							" display(\"Email\", email);\r",
+							" display(\"ID\", id);\r",
+							" setEnvironment(\"upID\", id);\r",
+							"\r",
+							"function display(item, value){\r",
+							"    pm.test(item+\"  \"+value, function () {\r",
+							"\r",
+							"    });\r",
+							"}\r",
+							"function setEnvironment(key, value){\r",
+							"    pm.environment.set(key,value);\r",
+							"}\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "{{name}}",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "{{email}}",
+							"type": "text"
+						},
+						{
+							"key": "gender",
+							"value": "{{gender}}",
+							"type": "text"
+						},
+						{
+							"key": "status",
+							"value": "{{status}}",
+							"type": "text"
+						},
+						{
+							"key": "proofsubmitted",
+							"value": "{{proofsubmitted}}",
+							"type": "text"
+						},
+						{
+							"key": "department",
+							"value": "{{department}}",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "{{salary}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{serviceEndPoint}}/api/users",
+					"host": [
+						"{{serviceEndPoint}}"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"setTimeout(function(){}, 1500);\r",
+							"\r",
+							"//Test01\r",
+							"pm.test(\"Update PUT response Success, 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//Test verification\r",
+							"let jData = pm.response.json();\r",
+							"let id = jData._id.toString();\r",
+							"let iSal = jData.salary.toString();\r",
+							"\r",
+							"\r",
+							"setEnvironment(\"uid\", id);\r",
+							"setEnvironment(\"sal\", iSal);\r",
+							" display(\"ID\", id);\r",
+							" display(\"updated salary \", iSal);\r",
+							" \r",
+							"\r",
+							"function display(item, value){\r",
+							"    pm.test(item+\"  \"+value, function () {\r",
+							"\r",
+							"    });\r",
+							"}\r",
+							"function setEnvironment(key, value){\r",
+							"    pm.environment.set(key,value);\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var ranID=Math.floor((Math.random() * 100) + 1);\r",
+							"pm.environment.set(\"rID\", ranID);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "{{name}}",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "{{email}}",
+							"type": "text"
+						},
+						{
+							"key": "gender",
+							"value": "{{gender}}",
+							"type": "text"
+						},
+						{
+							"key": "status",
+							"value": "{{status}}",
+							"type": "text"
+						},
+						{
+							"key": "proofsubmitted",
+							"value": "{{proofsubmitted}}",
+							"type": "text"
+						},
+						{
+							"key": "department",
+							"value": "{{department}}",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "{{salary}}{{rID}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{serviceEndPoint}}/api/users/{{upID}}",
+					"host": [
+						"{{serviceEndPoint}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{upID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetUserById",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"setTimeout(function(){}, 200);\r",
+							"\r",
+							"//Test01\r",
+							"pm.test(\"Get response success, 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{serviceEndPoint}}/api/users?id={{upID}}",
+					"host": [
+						"{{serviceEndPoint}}"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{upID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"setTimeout(function(){}, 500);\r",
+							"\r",
+							"//Test01\r",
+							"pm.test(\"Delete response success,200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "email",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "gender",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "status",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "proofsubmitted",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "department",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "salary",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{serviceEndPoint}}/api/users/{{upID}}",
+					"host": [
+						"{{serviceEndPoint}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{upID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllUsers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"setTimeout(function(){}, 500);\r",
+							"\r",
+							"//Test01\r",
+							"pm.test(\"Get all users response success,200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{serviceEndPoint}}/api/users",
+					"host": [
+						"{{serviceEndPoint}}"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"/**For app_servui_3000  **/\r",
+					"\r",
+					"pm.environment.set(\"serviceEndPoint\",\"http://localhost:3000\");\r",
+					"\r",
+					"\r",
+					"\r",
+					"\r",
+					"\r",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
