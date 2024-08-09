@@ -12,4 +12,7 @@ COPY environment.json /app/
 COPY TestData.csv /app/
 
 # Entry point command to run Newman with dynamic environment variable
+
 ENTRYPOINT ["sh", "-c", "newman run /app/apicollections.json -e /app/env.json -d /app/TestData.csv -n 2 --delay-request 500 -r htmlextra --reporter-htmlextra-noSyntaxHighlighting --reporter-htmlextra-title 'API Suite Report' --reporter-htmlextra-export /app/apisuitereport.html --environment /app/environment.json --env-var serviceEndPoint=$SERVICE_ENDPOINT"]
+
+
