@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emanager-org-deployment  # Unique deployment name
+  labels:
+    app: emanager-org  # Unique label for this deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: emanager-org  # Must match the labels in the pod template
+  template:
+    metadata:
+      labels:
+        app: emanager-org  # Unique label for the pods
+    spec:
+      containers:
+      - name: emanager-org
+        image: sreenath5007/alpha:emanager-org-latest  # Image for this deployment
+        ports:
+        - containerPort: 4000  # Port on which the application listens inside the container
