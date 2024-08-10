@@ -1,0 +1,15 @@
+# defining a load balancer service
+apiVersion: v1
+kind: Service
+metadata:
+  name: emanager-org-service  # Unique service name
+  labels:
+    app: emanager-org  # Label to match the deployment
+spec:
+  type: LoadBalancer  # Exposes the service to the outside world
+  selector:
+    app: emanager-org  # Must match the labels in the deployment's pod template
+  ports:
+    - protocol: TCP
+      port: 80           # Port on which the service will be exposed
+      targetPort: 4000   # Port on which the application listens inside the container

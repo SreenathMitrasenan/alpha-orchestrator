@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: emanager-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx  # Use ingressClassName for Kubernetes versions >= 1.18
+  rules:
+  - host: emanager.service.com  # Ensure this is the correct hostname
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: emanager-serv-service
+            port:
+              number: 80
