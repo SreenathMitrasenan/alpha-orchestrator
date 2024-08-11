@@ -1,0 +1,15 @@
+# This docker file will give console report on screen and quits after the job is complete.
+# Use the official Newman image as the base image
+FROM postman/newman:alpine
+
+# Set the working directory to /app
+WORKDIR /app
+
+# Copy the necessary files into the container at /app
+COPY . /app
+
+# Install the necessary reporters (if needed, otherwise this line can be removed)
+# RUN npm install -g newman-reporter-html newman-reporter-htmlextra
+
+# Run the tests and print the logs to the console
+ENTRYPOINT ["sh", "-c", "newman run /app/apicollections.json -d /app/TestData.csv -n 2 --delay-request 500 --environment /app/environment.json --env-var serviceEndPoint=$SERVICE_ENDPOINT"]

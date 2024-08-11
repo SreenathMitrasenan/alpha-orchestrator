@@ -1,0 +1,12 @@
+# This docker file doesnt generates any reports rather it will give container shell access after execution
+# Use the official Newman image as the base image
+FROM postman/newman:alpine
+
+# Set the working directory to /app
+WORKDIR /app
+
+# Copy the necessary files into the container at /app
+COPY . /app
+
+# Run the tests and print the logs to the console
+ENTRYPOINT ["sh", "-c", "newman run /app/apicollections.json -d /app/TestData.csv -n 2 --delay-request 500 --environment /app/environment.json --env-var serviceEndPoint=$SERVICE_ENDPOINT  && exec sh"]
