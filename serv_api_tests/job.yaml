@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: emanager-apitest-job
+spec:
+  template:
+    metadata:
+      labels:
+        job: emanager-apitest-job
+    spec:
+      containers:
+      - name: emanager-apitest-container
+        image: sreenath5007/alpha:emanager-apitest-latest
+        env:
+        - name: SERVICE_ENDPOINT
+          value: "http://emanager-serv-service:80"  # Ensure this matches the service endpoint in Kubernetes
+        volumeMounts:
+        - name: report-volume
+          mountPath: /app/  # Mount path where reports are saved in the container
+      restartPolicy: Never
+      volumes:
+      - name: report-volume
+        hostPath:
+          path: /home/ellip/  # Directory on the host node where reports will be saved
+          type: Directory
+  backoffLimit: 2  # Retry the job up to 4 times if it fails
