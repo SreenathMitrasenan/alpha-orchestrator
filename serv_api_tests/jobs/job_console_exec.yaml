@@ -1,0 +1,19 @@
+# This job is to execute the service tests inside the kubernetes container & reports logs can be viewed by run command "kubectl logs <container-name>"
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: emanager-apitest-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: emanager-apitest-container
+        image: sreenath5007/alpha:emanager-apitest-noninteractive-latest
+        env:
+        - name: SERVICE_ENDPOINT
+          value: "http://emanager-serv-service:80"  # Replace with your actual service endpoint
+        stdin: true
+        tty: true
+        command: [ "sh", "-c", "newman run /app/apicollections.json -d /app/TestData.csv -n 2 --delay-request 500 --environment /app/environment.json --env-var serviceEndPoint=$SERVICE_ENDPOINT && exec sh" ]
+      restartPolicy: Never
+  backoffLimit: 1
