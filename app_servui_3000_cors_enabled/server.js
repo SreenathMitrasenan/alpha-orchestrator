@@ -21,10 +21,13 @@ connectDB();
 
 // Enable CORS for all routes
 app.use(cors({
-    origin: 'http://localhost:3000', // For local development, adjust as needed for production
+    origin: '*', // For local development, adjust as needed for production
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));
+
+// Handle OPTIONS preflight requests
+app.options('*', cors()); 
 
 // parse req to body parser
 app.use(bodyparser.urlencoded({extended: true}));
