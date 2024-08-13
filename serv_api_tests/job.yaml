@@ -4,23 +4,19 @@ metadata:
   name: emanager-apitest-job
 spec:
   template:
-    metadata:
-      labels:
-        job: emanager-apitest-job
     spec:
       containers:
       - name: emanager-apitest-container
-        image: sreenath5007/alpha:emanager-apitest-latest
+        image: sreenath5007/alpha:emanager-apitest-v1.0.2
         env:
         - name: SERVICE_ENDPOINT
-          value: "http://emanager-serv-service:80"  # Ensure this matches the service endpoint in Kubernetes
+          value: "http://emanager-serv-service:80"  # Replace with the correct service endpoint
         volumeMounts:
         - name: report-volume
-          mountPath: /app/  # Mount path where reports are saved in the container
+          mountPath: /app
+        command: ["sh", "-c", "newman run /app/apicollections.json -d /app/TestData.csv -n 2 --delay-request 500 -r htmlextra --reporter-htmlextra-title 'API Suite Report' --reporter-htmlextra-export /app/report.html --env-var serviceEndPoint=$SERVICE_ENDPOINT && sh "]
       restartPolicy: Never
       volumes:
       - name: report-volume
-        hostPath:
-          path: /home/ellip/  # Directory on the host node where reports will be saved
-          type: Directory
-  backoffLimit: 2  # Retry the job up to 4 times if it fails
+        emptyDir: {}
+  backoffLimit: 1

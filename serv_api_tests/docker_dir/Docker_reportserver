@@ -1,6 +1,6 @@
 
 # This docker file executes api test iterations, generates html report which is copied to container location mnt, this will be flushed to nginx location 
-# docker run command --> docker run --rm --network host -e SERVICE_ENDPOINT="<app ip:port or load balancer ip where app is exposed>" -v /var/www/html:/mnt sreenath5007/alpha:emanager-apitest-v1.0.3
+# docker run command --> docker run --rm --network host -e SERVICE_ENDPOINT="http://34.93.136.228⁠" -v /var/www/html:/mnt sreenath5007/alpha:emanager-apitest-v1.0.3
 # Use the official Newman image as the base image
 FROM postman/newman:alpine
 
